@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: ssh://git@github.com/TeyDzh/terra.git
+    repoURL: git@github.com:TeyDzh/argocd-redis.git
     targetRevision: HEAD
     path: dep 
   destination:
