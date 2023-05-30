@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: git@github.com:TeyDzh/terra.git
+    repoURL: ssh://git@github.com:TeyDzh/terra.git
     targetRevision: HEAD
     path: dep 
   destination:
