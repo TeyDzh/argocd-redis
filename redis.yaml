@@ -4,13 +4,15 @@ metadata:
   name: redis-app
 spec:
   project: default
+  source:
+    chart: bitnami/redis
+    targetRevision: 17.11.3
+    repoURL: https://github.com/bitnami/charts.git
+    helm:
+      releaseName: reddis
   destination:
     server: https://kubernetes.default.svc
     namespace: redis
-  source:
-    repoURL: https://github.com/TeyDzh/argocd-redis.git
-    targetRevision: HEAD
-    chart: rabbitmq/charts/common
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
