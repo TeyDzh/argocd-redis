@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis-app
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: redis
+  source:
+    repoURL: https://github.com/TeyDzh/argocd-redis.git
+    targetRevision: HEAD
+    path: dep
+    helm:
+      valuesFiles:
+        - redis.yaml
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rabbit-app
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rabbit
+  source:
+    repoURL:
+    targetRevision:
+    path: dep
+    helm:
+      valuesFiles:
+        - rabbit.yaml
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
