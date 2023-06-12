@@ -16,7 +16,3 @@ spec:
     - CreateNamespace=true
     automated:
       selfHeal: true
-  sourceHelm:
-    valuesFiles:
-      - redis.yaml
-      - rabbit.yaml
