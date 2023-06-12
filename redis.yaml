@@ -10,9 +10,40 @@ spec:
     targetRevision: 17.11.3
     helm:
       releaseName: redis
+      values: |
+        replicaCount: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: redis
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+  podSpecPatch: |-
+    spec:
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - redis
+            topologyKey: "kubernetes.io/hostname"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - redis
+            topologyKey: "kubernetes.io/hostname"
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: redis-node
+                  operator: In
+                  values:
+                    - "true"
