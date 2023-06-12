@@ -11,12 +11,10 @@ spec:
     repoURL: https://github.com/TeyDzh/argocd-redis.git
     targetRevision: HEAD
     path: dep
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-  source:
     helm:
       valueFiles:
         - redis.yaml
         - rabbitmq.yaml
-
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
