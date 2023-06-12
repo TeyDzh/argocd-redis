@@ -10,9 +10,15 @@ spec:
     targetRevision: 17.11.3
     helm:
       releaseName: redis
+      parameters:
+        - name: replicaCount
+          value: "2"
   destination:
     server: https://kubernetes.default.svc
     namespace: redis
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

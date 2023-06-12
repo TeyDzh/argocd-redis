@@ -10,9 +10,15 @@ spec:
     targetRevision: 12.0.0
     helm:
       releaseName: rabbitmq
+      parameters:
+        - name: replicaCount
+          value: "2"
   destination:
     server: https://kubernetes.default.svc
     namespace: rabbitmq
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
