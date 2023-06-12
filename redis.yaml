@@ -18,37 +18,29 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-  patch: |-
-    spec:
-      template:
-        metadata:
-          labels:
-            app: redis
-        spec:
-          affinity:
-            podAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app
-                        operator: In
-                        values:
-                          - redis
-                  topologyKey: "kubernetes.io/hostname"
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app
-                        operator: In
-                        values:
-                          - redis
-                  topologyKey: "kubernetes.io/hostname"
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: redis-node
-                        operator: In
-                        values:
-                          - "true"
+  patch:
+    target:
+      kind: Deployment
+    patch: |-
+      spec:
+        replicas: 2
+        template:
+          spec:
+            affinity:
+              podAntiAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  - labelSelector:
+                      matchExpressions:
+                        - key: app
+                          operator: In
+                          values:
+                            - redis
+                    topologyKey: "kubernetes.io/hostname"
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: redis-node
+                          operator: In
+                          values:
+                            - "true"

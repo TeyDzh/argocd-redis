@@ -18,37 +18,29 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-  patch: |-
-    spec:
-      template:
-        metadata:
-          labels:
-            app: rabbitmq
-        spec:
-          affinity:
-            podAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app
-                        operator: In
-                        values:
-                          - rabbitmq
-                  topologyKey: "kubernetes.io/hostname"
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app
-                        operator: In
-                        values:
-                          - rabbitmq
-                  topologyKey: "kubernetes.io/hostname"
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: rabbitmq-node
-                        operator: In
-                        values:
-                          - "true"
+  patch:
+    target:
+      kind: Deployment
+    patch: |-
+      spec:
+        replicas: 2
+        template:
+          spec:
+            affinity:
+              podAntiAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  - labelSelector:
+                      matchExpressions:
+                        - key: app
+                          operator: In
+                          values:
+                            - rabbitmq
+                    topologyKey: "kubernetes.io/hostname"
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: rabbitmq-node
+                          operator: In
+                          values:
+                            - "true"
