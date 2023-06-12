@@ -17,6 +17,6 @@ spec:
   source:
     helm:
       valueFiles:
-        - redis-values.yaml
-        - rabbitmq-values.yaml
+        - redis.yaml
+        - rabbitmq.yaml
 
