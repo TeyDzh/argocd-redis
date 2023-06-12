@@ -12,16 +12,16 @@ spec:
     replicaCount: 2
     persistence:
       enabled: false
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - rabbitmq
-        topologyKey: "kubernetes.io/hostname"
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - rabbitmq
+          topologyKey: "kubernetes.io/hostname"
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
