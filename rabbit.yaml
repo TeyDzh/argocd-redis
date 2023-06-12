@@ -18,32 +18,37 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-  podSpecPatch: |-
+  patch: |-
     spec:
-    affinity:
-      podAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - rabbitmq
-            topologyKey: "kubernetes.io/hostname"
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - rabbitmq
-            topologyKey: "kubernetes.io/hostname"
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: rabbitmq-node
-                  operator: In
-                  values:
-                    - "true"
+      template:
+        metadata:
+          labels:
+            app: rabbitmq
+        spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - rabbitmq
+                  topologyKey: "kubernetes.io/hostname"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - rabbitmq
+                  topologyKey: "kubernetes.io/hostname"
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: rabbitmq-node
+                        operator: In
+                        values:
+                          - "true"
