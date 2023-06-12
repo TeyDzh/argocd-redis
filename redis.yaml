@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/TeyDzh/argocd-redis.git
     targetRevision: HEAD
-    chart: rabbitmq
+    chart: rabbitmq/charts/common
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
