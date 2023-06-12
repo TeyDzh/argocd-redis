@@ -24,9 +24,9 @@ spec:
         - name: affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].operator
           value: In
         - name: affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]
-          value: true
+          value: "true"
         - name: replicaCount
-          value: 2
+          value: "2"
   destination:
     server: https://kubernetes.default.svc
     namespace: rabbitmq
