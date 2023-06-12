@@ -12,35 +12,27 @@ spec:
       releaseName: rabbitmq
       values: |
         replicaCount: 2
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - rabbitmq
+                topologyKey: "kubernetes.io/hostname"
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: rabbitmq-node
+                      operator: In
+                      values:
+                        - "true"
   destination:
     server: https://kubernetes.default.svc
     namespace: rabbitmq
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-  patch:
-    target:
-      kind: Deployment
-    patch: |-
-      spec:
-        replicas: 2
-        template:
-          spec:
-            affinity:
-              podAntiAffinity:
-                requiredDuringSchedulingIgnoredDuringExecution:
-                  - labelSelector:
-                      matchExpressions:
-                        - key: app
-                          operator: In
-                          values:
-                            - rabbitmq
-                    topologyKey: "kubernetes.io/hostname"
-              nodeAffinity:
-                requiredDuringSchedulingIgnoredDuringExecution:
-                  nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: rabbitmq-node
-                          operator: In
-                          values:
-                            - "true"
