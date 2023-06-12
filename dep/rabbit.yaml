@@ -1,32 +1,44 @@
-apiVersion: helm.fluxcd.io/v1
-kind: HelmRelease
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: rabbitmq
+  name: rabbitmq-app
 spec:
-  releaseName: rabbitmq
-  chart:
-    repository: https://charts.bitnami.com/bitnami
-    name: rabbitmq
-    version: latest
-  values:
-    replicaCount: 2
-    persistence:
-      enabled: false
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: app
-                operator: In
-                values:
-                  - rabbitmq
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rabbitmq
+  source:
+    repoURL: https://github.com/TeyDzh/argocd-redis.git
+    targetRevision: HEAD
+    path: dep
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  sourceHelm:
+    - releaseName: rabbitmq
+      chart:
+        repository: https://charts.bitnami.com/bitnami
+        name: rabbitmq
+        version: latest
+      values:
+        replicaCount: 2
+        persistence:
+          enabled: false
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - rabbitmq
           topologyKey: "kubernetes.io/hostname"
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: rabbitmq-node
-                operator: In
-                values:
-                  - "true"
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: rabbitmq-node
+                    operator: In
+                    values:
+                      - "true"
