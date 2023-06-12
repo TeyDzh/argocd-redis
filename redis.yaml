@@ -14,21 +14,3 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - redis
-        topologyKey: "kubernetes.io/hostname"
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: redis-node
-                  operator: In
-                  values:
-                    - "true"
