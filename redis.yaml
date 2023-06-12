@@ -11,8 +11,22 @@ spec:
     helm:
       releaseName: redis
       parameters:
+        - name: podAntiAffinity
+          value: app
+        - name: podAntiAffinity
+          value: In
+        - name: podAntiAffinity
+          value: redis
+        - name: podAntiAffinity
+          value: kubernetes.io/hostname
+        - name: nodeAffinity
+          value: redis-node
+        - name: nodeAffinity
+          value: In
+        - name: nodeAffinity
+          value: "true"
         - name: replicaCount
-          value: "2"
+          value: "6"
   destination:
     server: https://kubernetes.default.svc
     namespace: redis

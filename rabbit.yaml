@@ -11,8 +11,22 @@ spec:
     helm:
       releaseName: rabbitmq
       parameters:
+        - name: podAntiAffinity
+          value: app
+        - name: podAntiAffinity
+          value: In
+        - name: podAntiAffinity
+          value: rabbitmq
+        - name: podAntiAffinity
+          value: kubernetes.io/hostname
+        - name: nodeAffinity
+          value: rabbitmq-node
+        - name: nodeAffinity
+          value: In
+        - name: nodeAffinity
+          value: "true"
         - name: replicaCount
-          value: "2"
+          value: "6"
   destination:
     server: https://kubernetes.default.svc
     namespace: rabbitmq
