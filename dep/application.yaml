@@ -1,24 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: main-argo-app
+  name: redis-rabbitmq-app
   namespace: argo
 spec:
   project: default
-
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rabbit-redis
   source:
     repoURL: https://github.com/TeyDzh/argocd-redis.git
     targetRevision: HEAD
     path: dep 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: rabbit-redis
-
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
-    
     automated:
       selfHeal: true
+
+
+    
 
                 

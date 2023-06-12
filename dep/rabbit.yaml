@@ -1,19 +1,32 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
 metadata:
   name: rabbitmq
 spec:
-  replicas: 6
-  selector:
-    matchLabels:
-      app: rabbitmq
-  template:
-    metadata:
-      labels:
-        app: rabbitmq
-    spec:
-      containers:
-        - name: rabbitmq
-          image: rabbitmq:latest
-          ports:
-            - containerPort: 5672
+  releaseName: rabbitmq
+  chart:
+    repository: https://charts.bitnami.com/bitnami
+    name: rabbitmq
+    version: latest
+  values:
+    replicaCount: 2
+    persistence:
+      enabled: false
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - rabbitmq
+        topologyKey: "kubernetes.io/hostname"
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: rabbitmq-node
+                operator: In
+                values:
+                  - "true"
