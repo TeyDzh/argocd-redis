@@ -13,12 +13,18 @@ spec:
     helm:
       releaseName: redis
       values: |
+        replica: 
+          replicaCount: 2
         livenessProbe:
           enabled: false
         readinessProbe:
           enabled: false
         persistence:
           enabled: false
+        auth:
+          enable: false
+        commonConfiguration: |-
+          appendonly no
         affinity:
           podAntiAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -39,7 +45,6 @@ spec:
                         - minikube
                         - minikube-m02
                         - minikube-m03
-        replicas: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: redis

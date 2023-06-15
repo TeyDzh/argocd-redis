@@ -13,6 +13,8 @@ spec:
     helm:
       releaseName: rabbitmq
       values: |
+        replica: 
+          replicaCount: 2
         livenessProbe:
           enabled: false
         readinessProbe:
