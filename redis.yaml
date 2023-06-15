@@ -36,7 +36,7 @@ spec:
                     - key: app
                       operator: In
                       values:
-                        - redis
+                        - rabis
                 topologyKey: kubernetes.io/hostname
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
