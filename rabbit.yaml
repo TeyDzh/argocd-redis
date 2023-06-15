@@ -17,6 +17,8 @@ spec:
           enabled: false
         readinessProbe:
           enabled: false
+        persistence:
+          enabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: rabbitmq
