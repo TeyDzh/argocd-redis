@@ -13,7 +13,7 @@ spec:
     helm:
       parameters:
         - name: replica.replicaCount
-          value: "2"
+          value: "3"
       releaseName: redis
       values: |
         livenessProbe:
