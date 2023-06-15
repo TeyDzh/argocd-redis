@@ -33,10 +33,12 @@ spec:
             requiredDuringSchedulingIgnoredDuringExecution:
               nodeSelectorTerms:
                 - matchExpressions:
-                    - key: rabbitmq-node
+                    - key: kubernetes.io/hostname
                       operator: In
                       values:
-                        - "true"
+                        - minikube
+                        - minikube-m02
+                        - minikube-m03
         replicas: 2
   destination:
     server: https://kubernetes.default.svc
