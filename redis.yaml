@@ -11,26 +11,6 @@ spec:
     targetRevision: 17.11.3
     helm:
       releaseName: redis
-      values: |
-        affinity:
-          podAntiAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                        - redis
-                topologyKey: kubernetes.io/hostname
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: redis-node
-                      operator: In
-                      values:
-                        - "true"
-          replicas: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: redis

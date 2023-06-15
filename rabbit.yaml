@@ -11,26 +11,26 @@ spec:
     targetRevision: 12.0.0
     helm:
       releaseName: rabbitmq
-      values: |
-        affinity:
-          podAntiAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                        - rabbitmq
-                topologyKey: kubernetes.io/hostname
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: rabbitmq-node
-                      operator: In
-                      values:
-                        - "true"
-          replicas: 2
+      # values: |
+      #   affinity:
+      #     podAntiAffinity:
+      #       requiredDuringSchedulingIgnoredDuringExecution:
+      #         - labelSelector:
+      #             matchExpressions:
+      #               - key: app
+      #                 operator: In
+      #                 values:
+      #                   - rabbitmq
+      #           topologyKey: kubernetes.io/hostname
+      #     nodeAffinity:
+      #       requiredDuringSchedulingIgnoredDuringExecution:
+      #         nodeSelectorTerms:
+      #           - matchExpressions:
+      #               - key: rabbitmq-node
+      #                 operator: In
+      #                 values:
+      #                   - "true"
+      #     replicas: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: rabbitmq
