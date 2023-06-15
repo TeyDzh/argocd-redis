@@ -41,7 +41,6 @@ spec:
                         - minikube
                         - minikube-m02
                         - minikube-m03
-        replicas: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: rabbitmq
